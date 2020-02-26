@@ -91,7 +91,7 @@ while operacion != 'x':
         pantalla = 0
         primer = True
 
-    else:
+    else:   #Si realmente es una operacion lo que vamos a realizar
         if primer==True:    #Si es la 1ª vez tenemos que pedir los 2 nº
             pantalla = verifica_valor(input("Primer valor: "))      #Pedimos el primer nº y miramos si realmente es un nº
             while pantalla == "ERROR":
