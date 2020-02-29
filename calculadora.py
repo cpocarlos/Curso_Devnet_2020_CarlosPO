@@ -57,6 +57,21 @@ def division(a,b):
         print("ERROR: estas haciendo una operacion prohibida")
         return(0)
 
+def exponencial(a):
+    try:
+        return(math.exp(a))
+    except:
+        print("ERROR: estas haciendo una operacion prohibida")
+        return(0)
+
+def raiz_cuadrada(a):
+    try:
+        return(math.sqrt(a))
+    except:
+        print("ERROR: estas haciendo una operacion prohibida")
+        return(0)
+
+
 # Funcion que comprueba si el valor introducido es valido (int/float) y lo devuelve preferiblemente en INT, luego en FLOAT y sino devuelve un False
 def verifica_valor(valor):
     #Si es 0 lo devolvemos directamente
@@ -75,47 +90,93 @@ def verifica_valor(valor):
                 print ("ERROR: Por favor introduce un numero!!") 
                 return("ERROR")
 
+def solicita_primer_valor():
+    #if primer==True:    #Si es la 1ª vez tenemos que pedir los 2 nº
+    num1 = verifica_valor(input("Primer valor: "))      #Pedimos el primer nº y miramos si realmente es un nº
+    while num1 == "\nERROR":
+        num1 = verifica_valor(input("Primer valor: "))
+    print(num1,end='')
+    primer=False
+    return(num1)
+
+def solicita_segundo_valor():
+    num2 = verifica_valor(input(operaciones_posibles[operacion]))   #Pedimos el segundo nº y miramos si realmente es un nº
+    while num2 == "\nERROR":
+        num2 = verifica_valor(input(operaciones_posibles[operacion]))
+    return(num2)
 
 
 # Empieza la ejecución
+
+#Mientras no pulsen X estamos no salimos del programa
 while operacion != 'x':
-    operacion = input(menu)
-    while operacion not in operaciones_posibles:
+    operacion = input(menu)     #Solicitamos operacion a realizar
+    while operacion not in operaciones_posibles:    #Verificamos que realmente nos introducen una operacion valida
         print("INTRODUCE SOLO UNA DE LAS OPERACIONES POSIBLES!!")
         operacion = input(menu)
 
+    #Si pulsaron X es que quieren salir
     if operacion == "x":
         print("Saliendo...")
         sys.exit(0)
+
+    #Si pulsaron L es que quieren limpiar pantalla
     elif operacion == "l":
         pantalla = 0
         primer = True
 
-    else:   #Si realmente es una operacion lo que vamos a realizar
-        if primer==True:    #Si es la 1ª vez tenemos que pedir los 2 nº
-            pantalla = verifica_valor(input("Primer valor: "))      #Pedimos el primer nº y miramos si realmente es un nº
-            while pantalla == "ERROR":
-                pantalla = verifica_valor(input("Primer valor: "))
-
-            num2 = verifica_valor(input(str(pantalla) + operaciones_posibles[operacion]))   #Pedimos el segundo nº y miramos si realmente es un nº
-            while num2 == "ERROR":
-                num2 = verifica_valor(input(str(pantalla) + operaciones_posibles[operacion]))
+    #Dependiendo de la operacion elegida llamamos a la funcion necesaria
+    elif operacion == "s":
+        if primer == True:
+            pantalla = suma(solicita_primer_valor(),solicita_segundo_valor())
             primer = False
-        else:               #Si ya tenemos algo en pantalla solo necesitamos el 2º nº
-            num2 = verifica_valor(input(str(pantalla) + operaciones_posibles[operacion]))
+        else:
+            print(pantalla,end='')
+            pantalla = suma(pantalla,solicita_segundo_valor())
+    
+    elif operacion == "r":
+        if primer == True:
+            pantalla = resta(solicita_primer_valor(),solicita_segundo_valor())
+            primer = False
+        else:
+            print(pantalla,end='')
+            pantalla = resta(pantalla,solicita_segundo_valor())
 
-        #Dependiendo de la operacion elegida llamamos a la funcion necesaria
-        if operacion == "s":
-            pantalla = suma(pantalla,num2)
-        elif operacion == "r":
-            pantalla = resta(pantalla,num2)
-        elif operacion == "m":
-            pantalla = multiplicacion(pantalla,num2)
-        elif operacion == "d":
-            pantalla = division(pantalla,num2)
+    elif operacion == "m":
+        if primer == True:
+            pantalla = multiplicacion(solicita_primer_valor(),solicita_segundo_valor())
+            primer = False
+        else:
+            print(pantalla,end='')
+            pantalla = multiplicacion(pantalla,solicita_segundo_valor())
+
+    elif operacion == "d":
+        if primer == True:
+            pantalla = division(solicita_primer_valor(),solicita_segundo_valor())
+            primer = False
+        else:
+            print(pantalla,end='')
+            pantalla = division(pantalla,solicita_segundo_valor())
+
+    elif operacion == "e":
+        if primer == True:
+            pantalla = exponencial(solicita_segundo_valor())
+            primer = False
+        else:
+            print("^"+str(pantalla),end='')
+            pantalla = exponencial(pantalla)
+
+    elif operacion == "c":
+        if primer == True:
+            pantalla = raiz_cuadrada(solicita_segundo_valor())
+            primer = False
+        else:
+            print("^"+str(pantalla),end='')
+            pantalla = raiz_cuadrada(pantalla)
+
 
         
     #Imprimimos resultado por pantalla
-    print("RESULTADO->",pantalla)
+    print("\n\tRESULTADO->",pantalla)
 
 
