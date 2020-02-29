@@ -51,24 +51,33 @@ def multiplicacion(a,b):
     return(a*b)
 
 def division(a,b):
+    global primer
     try:
         return(a/b)
+        primer = False
     except:
-        print("ERROR: estas haciendo una operacion prohibida")
+        print("\nERROR: estas haciendo una operacion prohibida")
+        primer = True
         return(0)
 
 def exponencial(a):
+    global primer
     try:
         return(math.exp(a))
+        primer = False
     except:
-        print("ERROR: estas haciendo una operacion prohibida")
+        print("\nERROR: estas haciendo una operacion prohibida")
+        primer = True
         return(0)
 
 def raiz_cuadrada(a):
+    global primer
     try:
         return(math.sqrt(a))
+        primer = False
     except:
-        print("ERROR: estas haciendo una operacion prohibida")
+        print("\nERROR: estas haciendo una operacion prohibida")
+        primer = True
         return(0)
 
 
@@ -91,6 +100,7 @@ def verifica_valor(valor):
                 return("ERROR")
 
 def solicita_primer_valor():
+    global primer
     #if primer==True:    #Si es la 1ª vez tenemos que pedir los 2 nº
     num1 = verifica_valor(input("Primer valor: "))      #Pedimos el primer nº y miramos si realmente es un nº
     while num1 == "\nERROR":
@@ -153,7 +163,7 @@ while operacion != 'x':
     elif operacion == "d":
         if primer == True:
             pantalla = division(solicita_primer_valor(),solicita_segundo_valor())
-            primer = False
+            #primer = False
         else:
             print(pantalla,end='')
             pantalla = division(pantalla,solicita_segundo_valor())
@@ -161,7 +171,7 @@ while operacion != 'x':
     elif operacion == "e":
         if primer == True:
             pantalla = exponencial(solicita_segundo_valor())
-            primer = False
+            #primer = False
         else:
             print("^"+str(pantalla),end='')
             pantalla = exponencial(pantalla)
@@ -169,7 +179,7 @@ while operacion != 'x':
     elif operacion == "c":
         if primer == True:
             pantalla = raiz_cuadrada(solicita_segundo_valor())
-            primer = False
+            #primer = False
         else:
             print("^"+str(pantalla),end='')
             pantalla = raiz_cuadrada(pantalla)
